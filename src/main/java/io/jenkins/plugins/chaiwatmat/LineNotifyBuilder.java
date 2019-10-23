@@ -20,49 +20,30 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
 
-    private final String name;
-    private boolean useFrench;
+    private final String message;
 
     @DataBoundConstructor
-    public LineNotifyBuilder(String name) {
-        this.name = name;
+    public LineNotifyBuilder(String message) {
+        this.message = message;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public boolean isUseFrench() {
-        return useFrench;
-    }
-
-    @DataBoundSetter
-    public void setUseFrench(boolean useFrench) {
-        this.useFrench = useFrench;
+    public String getMessage() {
+        return this.message;
     }
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
-        if (useFrench) {
-            listener.getLogger().println("Bonjour, " + name + "!");
-        } else {
-            listener.getLogger().println("Hello, " + name + "!");
-        }
+        listener.getLogger().println("Send message: " + message + "!");
     }
 
-    @Symbol("greet")
+    @Symbol("lineNoti")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public FormValidation doCheckName(@QueryParameter String value, @QueryParameter boolean useFrench)
+        public FormValidation doCheckName(@QueryParameter String value)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error(Messages.LineNotifyBuilder_DescriptorImpl_errors_missingName());
-            if (value.length() < 4)
-                return FormValidation.warning(Messages.LineNotifyBuilder_DescriptorImpl_warnings_tooShort());
-            if (!useFrench && value.matches(".*[éáàç].*")) {
-                return FormValidation.warning(Messages.LineNotifyBuilder_DescriptorImpl_warnings_reallyFrench());
-            }
+                return FormValidation.error(Messages.LineNotifyBuilder_DescriptorImpl_errors_missingMessage());
             return FormValidation.ok();
         }
 
