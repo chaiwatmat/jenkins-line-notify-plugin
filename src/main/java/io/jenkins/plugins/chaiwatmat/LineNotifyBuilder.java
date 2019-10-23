@@ -50,7 +50,7 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public FormValidation doCheckName(@QueryParameter String value)
+        public FormValidation doCheckName(@QueryParameter String value, @QueryParameter String groupName)
                 throws IOException, ServletException {
             if (value.length() == 0)
                 return FormValidation.error(Messages.LineNotifyBuilder_DescriptorImpl_errors_missingMessage());
