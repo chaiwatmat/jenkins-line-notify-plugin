@@ -24,12 +24,8 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
     private String groupName;
 
     @DataBoundConstructor
-    public LineNotifyBuilder(String message) {
+    public LineNotifyBuilder(String message, String groupName) {
         this.message = message;
-    }
-
-    @DataBoundSetter
-    public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
