@@ -4,6 +4,8 @@
 .settings
 .sts4-cache
 
+*.iml
+
 target/
 work
 
