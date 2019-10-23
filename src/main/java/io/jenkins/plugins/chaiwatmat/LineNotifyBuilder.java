@@ -21,14 +21,24 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
 
     private final String message;
+    private String groupName;
 
     @DataBoundConstructor
     public LineNotifyBuilder(String message) {
         this.message = message;
     }
 
+    @DataBoundSetter
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
     public String getMessage() {
         return this.message;
+    }
+
+    public String getGroupName(){
+        return this.groupName;
     }
 
     @Override
