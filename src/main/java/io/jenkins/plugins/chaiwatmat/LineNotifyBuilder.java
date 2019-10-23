@@ -9,6 +9,7 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
+import okhttp3.*;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
@@ -46,6 +47,19 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
         listener.getLogger().println("Send message: " + message + "!");
+
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, "message=" + this.message);
+        Request request = new Request.Builder()
+                .url("https://notify-api.line.me/api/notify")
+                .post(body)
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("authorization", "Bearer " + this.lineToken)
+                .build();
+
+        Response response = client.newCall(request).execute();
     }
 
     @Symbol("lineNoti")
