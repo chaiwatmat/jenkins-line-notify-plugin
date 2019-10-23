@@ -22,11 +22,13 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
 
     private final String message;
     private String groupName;
+    private String lineToken;
 
     @DataBoundConstructor
-    public LineNotifyBuilder(String message, String groupName) {
+    public LineNotifyBuilder(String message, String groupName, String lineToken) {
         this.message = message;
         this.groupName = groupName;
+        this.lineToken = lineToken;
     }
 
     public String getMessage() {
@@ -35,6 +37,10 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
 
     public String getGroupName(){
         return this.groupName;
+    }
+
+    public String getLineToken(){
+        return this.lineToken;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public FormValidation doCheckName(@QueryParameter String value, @QueryParameter String groupName)
+        public FormValidation doCheckName(@QueryParameter String value, @QueryParameter String groupName, @QueryParameter String lineToken)
                 throws IOException, ServletException {
             if (value.length() == 0)
                 return FormValidation.error(Messages.LineNotifyBuilder_DescriptorImpl_errors_missingMessage());
