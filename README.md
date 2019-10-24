@@ -1,21 +1,26 @@
 # Jenkins Line Notify
 
-## how to run local
+This plugin use for send message to LINE application, using service [Line notify](https://notify-bot.line.me/en/)
 
-### Unix
+## Prerequisite
 
-```sh
-export MAVEN_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=n"
-mvn hpi:run
+- LINE account
+- Token from [Line notify](https://notify-bot.line.me/en/) 
+
+## Installation
+
+Install plugin `line-notify-plugin` from `Jenkins > Manage Jenkins > Manage Plugins`
+
+## How to use
+
+### Freestyle job
+
+Just add `Line notify` from build step
+
+### Example Pipeline job
+
+```shell script
+node {
+   lineNoti groupName: 'my group', lineToken: '*****', message: 'hello from Jenkins'
+}
 ```
-
-### Windows
-
-```bat
-set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=n
-mvn hpi:run
-```
-
-## More document
-
-[Jenkins plugin development guideline](https://wiki.jenkins.io/pages/viewpage.action?pageId=67567923#Plugintutorial-SettingUpEnvironment)
