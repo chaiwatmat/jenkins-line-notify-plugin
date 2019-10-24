@@ -1,4 +1,4 @@
-package io.jenkins.plugins.chaiwatmat;
+package io.jenkins.plugins.linenotify;
 
 import hudson.Launcher;
 import hudson.Extension;
@@ -62,7 +62,7 @@ public class LineNotifyBuilder extends Builder implements SimpleBuildStep {
         Response response = client.newCall(request).execute();
     }
 
-    @Symbol("lineNoti")
+    @Symbol("lineNotify")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
